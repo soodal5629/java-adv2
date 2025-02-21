@@ -1,12 +1,14 @@
 package io.member;
 
+import io.member.impl.FileMemberRepository;
 import io.member.impl.MemoryMemberRepository;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class MemberConsoleMain {
-    private static final MemberRepository repository = new MemoryMemberRepository();
+    // private static final MemberRepository repository = new MemoryMemberRepository();
+    private static final MemberRepository repository = new FileMemberRepository();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
