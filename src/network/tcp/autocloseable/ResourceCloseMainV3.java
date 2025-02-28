@@ -1,6 +1,6 @@
 package network.tcp.autocloseable;
 
-public class ResourceCloseMainV2 {
+public class ResourceCloseMainV3 {
     public static void main(String[] args) {
         try {
             logic();
@@ -28,10 +28,19 @@ public class ResourceCloseMainV2 {
         } finally {
             // 자원 객체 생성 시 문제가 발생하여 null일 경우를 대비하여 null 체크
             if(resource2 != null) {
-                resource2.closeEx(); // 자원 정리 중 체크 예외 발생
+                try{
+                    resource2.closeEx(); // 자원 정리 중 체크 예외 발생
+                } catch(CloseException e) {
+                    // close()에서 발생한 예외는 버린다. 필요하면 로깅 정도
+                    System.out.println("close ex: " + e);
+                }
             }
             if(resource1 != null) {
-                resource1.close(); // 코드 호출 안됨
+                try {
+                    resource1.closeEx();
+                } catch(CloseException e) {
+                    System.out.println("close ex: " + e);
+                }
             }
         }
     }
