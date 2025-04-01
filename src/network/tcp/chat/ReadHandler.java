@@ -7,21 +7,37 @@ import static util.MyLogger.log;
 
 public class ReadHandler implements Runnable {
     private final DataInputStream input;
-    public ReadHandler(DataInputStream input) {
+    private final ChatClient client;
+    public boolean closed = false;
+
+    public ReadHandler(DataInputStream input, ChatClient client) {
         this.input = input;
+        this.client = client;
     }
 
     @Override
     public void run() {
-        while(true) {
-            // 서버로부터 문자 받기
-            String received = null;
-            try {
-                received = input.readUTF();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        try {
+            while(true) {
+                // 서버로부터 문자 받기
+                String received = input.readUTF();
+                System.out.println("received = " + received);
             }
-            log("server -> client: " + received);
+        } catch (IOException e) {
+            log(e);
+        } finally {
+            // client 에서 socket, ReadHandler, WriterHandler 모두 자원 정리
+            client.close();
         }
+    }
+
+    public synchronized void close() {
+        // 동시 호출 방지
+        if(closed) {
+            return;
+        }
+        // 종료 로직 필요시 작성
+        closed = true;
+        log("ReadHandler 종료");
     }
 }
