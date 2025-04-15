@@ -36,15 +36,11 @@ public class WriterHandler implements Runnable {
                 }
                 // "/"로 시작하는 명령어, 나머지는 일반 메시지
                 if(toSend.startsWith("/")) { // { /user, /change }
-
+                    output.writeUTF(toSend);
                 } else { // hihi hello 등 / 없이 입력받았을 경우 그냥 메시지로 간주하고 보냄
                     output.writeUTF("/message" + DELIMITER + toSend);
                 }
-                output.writeUTF(toSend);
                 log("client -> server: " + toSend);
-                if (toSend.equals("exit")) {
-                    break;
-                }
             }
 
         } catch (IOException |NoSuchElementException e) {

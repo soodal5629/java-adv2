@@ -21,7 +21,7 @@ public class ReadHandler implements Runnable {
             while(true) {
                 // 서버로부터 문자 받기
                 String received = input.readUTF();
-                System.out.println("received = " + received);
+                System.out.println(received);
             }
         } catch (IOException e) {
             log(e);
