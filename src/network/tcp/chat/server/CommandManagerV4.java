@@ -28,7 +28,7 @@ public class CommandManagerV4 implements CommandManager {
         // /join /message /change /users /exit
         String key = args[0];
         // 다형성 활용
-        // NullObject Pattern - key에 해당하는 값이 없을 경우(null) DefaultCommand 이용
+        // Null Object Pattern - key에 해당하는 값이 없을 경우(null) DefaultCommand 이용(null일 경우 디폴트 값 이용)
         Command command = commands.getOrDefault(key, defaultCommand);
         command.execute(args, session);
     }
