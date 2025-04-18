@@ -1,33 +1,31 @@
-package wa.v1;
+package was.v2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static util.MyLogger.log;
 
-public class HttpServerV1 {
-    private final int port;
+public class HttpRequestHandlerV2 implements Runnable {
+    private final Socket socket;
 
-    public HttpServerV1(int port) {
-        this.port = port;
+    public HttpRequestHandlerV2(Socket socket) {
+        this.socket = socket;
     }
 
-    public void start() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(port);
-        log("서버 시작 port: " + port);
-
-        while (true) {
-            Socket socket = serverSocket.accept();
-            process(socket);
+    @Override
+    public void run() {
+        try {
+            process();
+        } catch (Exception e) {
+            log(e);
         }
     }
 
-    private void process(Socket socket) throws IOException {
+    private void process() throws IOException {
         try(socket;
             // 한줄씩 읽기 편함
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
@@ -90,5 +88,4 @@ public class HttpServerV1 {
             throw new RuntimeException(e);
         }
     }
-
 }

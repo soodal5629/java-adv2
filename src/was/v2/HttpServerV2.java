@@ -1,4 +1,4 @@
-package wa.v2;
+package was.v2;
 
 import java.io.IOException;
 import java.net.ServerSocket;
