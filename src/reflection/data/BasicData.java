@@ -13,7 +13,7 @@ public class BasicData {
     }
 
     public void call() {
-        System.out.println("");
+        System.out.println("BasicData.call");
     }
 
     public String hello(String str) {
