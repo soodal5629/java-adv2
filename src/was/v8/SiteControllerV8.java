@@ -25,4 +25,10 @@ public class SiteControllerV8 {
     public void site2(HttpResponse response) {
         response.writeBody("<h1>site2</h1>");
     }
+
+    // 경로 매핑 중복 체크 확인용
+//    @Mapping("/site2")
+//    public void page2(HttpResponse response) {
+//        response.writeBody("<h1>page2</h1>");
+//    }
 }
